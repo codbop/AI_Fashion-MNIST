@@ -1,0 +1,49 @@
+def build_classifier():
+    classifier = Sequential()
+    
+    classifier.add(Conv2D(filters = 16, kernel_size = (3, 3), activation = 'relu', strides = 1,
+                          padding = 'same', input_shape = (28,28,1)))
+    classifier.add(MaxPool2D(pool_size = (2, 2), padding = 'same'))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.2))
+    
+    classifier.add(Conv2D(filters = 32, kernel_size = (3, 3), activation = 'relu', strides = 1,
+                          padding = 'same', input_shape = (28,28,1)))
+    classifier.add(MaxPool2D(pool_size = (2, 2), padding = 'same'))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.2))
+    
+    classifier.add(Flatten())
+    classifier.add(Dense(256, activation = 'relu'))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.2))
+    classifier.add(Dense(128, activation = 'relu'))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.2))
+    classifier.add(Dense(10, activation = 'softmax'))
+                   
+    opt = Adam()
+    #opt = SGD()
+    #opt = RMSprop()
+    
+    classifier.compile(optimizer = opt, loss = 'categorical_crossentropy', metrics = ['accuracy'])
+    
+    return classifier
+
+epochs = 50
+datagen = ImageDataGenerator()
+
+Not: İlk CNN modelinde batch normalization katmanları, dropout katmanlari ve data augmentation işlemi gibi accuracy'i 
+arttırabilecek düzenlemeler yapılarak CNN modeli bu düzenlemelerle birlikte çalıştırıldı. Grafiklerde görüldüğü üzere
+ANN modellerine oranla CNN çok daha iyi bir performans verdi. İlk modelin accuracy değeri validation data üzerinde %93'ün 
+üzerini görmeyi başardı. Bununle birlikte test verisi eğitilen model üzerinde çalıştırıldığında ANN modeline göre 
+tahminlemede çok daha iyi sonuçlar alındı. Confusion matrix grafiğinde de görüldüğü üzere buradaki ilginç nokta bu model ANN
+modellerinin pek başarılı olamadığı Shirt resimlerini biraz daha iyi tahmin etmiş olsa da T-shirt resimlerini ayırt etmede
+en kötü performansı sergileyen ANN modelinden bile biraz daha düşük bir oranla bu resimleri ayırt ettiği görülüyor. Ayrıca
+bu CNN modeli de grafiklerden de anlaşılacağı üzere biraz dalgalı bir öğrenme grafiği çizmiş durumda. Bu durum bu model
+üzerinde daha farklı işlemler ve düzenlemeler uygulanması gerektiğini ortaya koymaktadır. CNN modelinde açıkçası bu dalgalı 
+öğrenmeyi daha smooth bir şekilde öğrenebilecek bir hale henüz getiremediğimi belirtmeliyim. Bu durumu ikinci deneyde düzeltmeyi
+planlıyorum.
+
+
+

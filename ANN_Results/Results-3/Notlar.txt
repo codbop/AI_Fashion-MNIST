@@ -1,0 +1,19 @@
+optimizer = Adam			Hidden Layer = (units: 512, kernel_initializer: 'uniform', activation: 'relu')
+epochs = 100				Hidden Layer = (units: 128, kernel_initializer: 'uniform', activation: 'relu')
+batch_size = 50				Hidden Layer = (units: 32, kernel_initializer: 'uniform', activation: 'relu')
+validation_split = 0.33			Hidden Layer = (units: 16, kernel_initializer: 'uniform', activation: 'relu')	
+lr = 0.001 (Default)			Hidden Layer = (units: 4, kernel_initializer: 'uniform', activation: 'relu')
+					Output Layer = (units: 10, kernel_initializer: 'uniform', activation: 'softmax')
+
+Not: Grafiklerden de anlaşıldığı üzere Adam optimizasyonu SGD'ye göre daha düşük bir performans sergilemiş durumda.
+Tabiki de değerler değiştirilerek bu performans biraz daha yükseltilebilir fakat SGD'nin kolay bir şekilde ilk denememde
+iyi bir performans verdiğini söyleyebilirim. Confusion matrixte yine buradaki shirt resimlerinin diğerlerine göre daha 
+zor ayırt edilmiş olduğu görülüyor. Adam, çok kötü bir performans vermedi fakat ilerleyen iterasyonlarda biraz overfitting 
+meydana geldi. Bu değerler ve katmanlar çok farklı şekilde ayarlanıp deneyler yapılabilir ve belli ölçüde model belki 
+iyileştirilebilir. 
+
+Genel olarak elde ettiğim gözlemimi belirtmem gerekirse epoch sayısı ve batch_size gibi parametleri ve modelin katmanlarını 
+istediğim kadar oynasam da modelin validation_set üzerindeki accuracy değeri en fazla yüzde 90 oranını görmekte ve bu 
+değeri geçmemekte, loss değeri ise en az yüzde 33 veya 32 gibi bir değeri görmekte ve bu değerlerin altına inmemekte.
+Yaptığım araştırmalara göre burada verisetinin ve farklı ağ modellerinin önemi açıkçası ortaya çıkmata. Daha fazla, 
+daha kaliteli veriseti ve CNN gibi bir modelle eğitim işlemi yapılırsa bu oranların daha iyi değerlere ulaşacağını düşünüyorum. 

@@ -1,0 +1,17 @@
+optimizer = rmsprop			Hidden Layer = (units: 256, kernel_initializer: 'uniform', activation: 'relu') 
+epochs = 1000				Hidden Layer = (units: 128, kernel_initializer: 'uniform', activation: 'relu')
+batch_size = 100			Hidden Layer = (units: 32, kernel_initializer: 'uniform', activation: 'relu')
+validation_split = 0.33			Output Layer = (units: 10, kernel_initializer: 'uniform', activation: 'softmax')
+lr = 0.001 (Default)
+
+Not: Grafiklerde de görüldüğü üzere ilk sonucun üstte verilen değerlerle pek iç açıcı olmadığı anlaşılmaktadır. Train ve
+test verisetinde belli bir ölçüye kadar accuracy değerinde iyileşme olmuş fakat test verisetinde train verisetine göre
+daha ileriki iterasyonlarda accuracy ve loss değerlerinde önemli ölçüde bir kötüye gidiş gözlenmiştir. Ayrıca iki grafikte
+de ciddi derecede overfitting söz konusudur. Bunu grafiklerdeki dalgalalanmalardan anlayabiliyoruz. Bu demektir ki öğrenme
+istikrarlı bir şekilde gerçekleşemiyor. Bu da modelin düzensiz bir öğrenme süreci ortaya koyduğunu gösteriyor. Bunun nedeninin batch_size, 
+optimizer ve learning rate gibi parametrelerle ilgili olma ihtimali yüksek gibi duruyor. Bu parametreler değiştirilerek 
+bir sonraki deneyde neler olduğu gözlemlenecektir.  Ayrıca Confusion Matrix grafiğinde de görüldüğü üzere bir çok Shirt 
+örneği T-shirt olarak algılanmış. Burada bu iki nesne birbirine benzer olduğu için bu iki nesneyi modelin ayırt etmekte 
+zorlandığı net biçimde görülüyor. Tam tersine bazı T-shirt örnekleri Shirt olarak algılansa da Shirt örneklerinin 
+T-Shirt olarak algılanmasına göre çok daha iyi bir doğruluk değeriyle T-shirt örneklerinin sınıflandırıldığı net bir 
+şekilde görülüyor. 

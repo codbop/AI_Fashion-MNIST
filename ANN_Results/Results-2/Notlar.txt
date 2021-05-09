@@ -1,0 +1,17 @@
+optimizer = SGD				Hidden Layer = (units: 256, kernel_initializer: 'uniform', activation: 'relu')
+epochs = 1000				Hidden Layer = (units: 128, kernel_initializer: 'uniform', activation: 'relu')
+batch_size = 200			Hidden Layer = (units: 32, kernel_initializer: 'uniform', activation: 'relu')
+validation_split = 0.33			Output Layer = (units: 10, kernel_initializer: 'uniform', activation: 'softmax')
+lr = 0.025
+
+Not: Optimizer, batch_size ve learning rate değerleri değiştirildi. Grafiklerde görüldüğü üzere aynı katmanlara sahip
+modelde bir önceki deneye göre olağanüstü derecede bir gelişme var. Train verisetindeki accuracy ve loss değerlerinde
+bir önceki deneye göre daha iyi derecede bir iyileşme gözlemlenmekte fakat bundan daha önemlisi validation verisetinde  
+kaydedilen gelişim. Grafiklerde görüldüğü üzere validation verisetinde loss ve accuracy değerleri her iterasyonda bir 
+önceki deneye göre olağanüstü derecede iyileşme göstermiş durumda. Bir önceki deneyde modelin ilerleyen iterasyonlarda 
+çok olumsuz derecede bir performans sergilediğini fakat bu deneyde bir önceki deneye göre modelin kendini devamlı olumlu 
+yönde eğittiğini görüyoruz. Ayrıca diğer önemli bir nokta bu deneyde overfitting, grafiklerden de anlaşıldığı üzere bir 
+önceki deneye göre çok daha aza indirgenmiş durumda. Grafik, bu deneyde çok daha smooth bir eğriye sahip. Diğer bir
+değinilmesi gereken nokta iste confusion matrixte Shirt örneklerinin T-shirt örneklerinden bir önceki deneye göre daha iyi
+ayırt edilmiş olması fakat yine de bu iki nesnenin ayırt edilmesinde istenilen seviyeye pek ulaşılamamış olunduğu gözükmekte.
+Bu iki nesnenin ayırt edilmesinde hala bir sıkıntı var.

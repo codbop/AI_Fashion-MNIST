@@ -1,0 +1,60 @@
+def build_classifier():
+    
+    classifier = Sequential()
+    
+    classifier.add(Conv2D(filters = 32, kernel_size = (3, 3), activation = 'relu', 
+                          kernel_constraint = unit_norm(), kernel_initializer = 'he_normal',
+                          padding = 'same', input_shape = (28,28,1)))
+    classifier.add(MaxPool2D(pool_size = (2, 2), padding = 'same'))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.25))
+    
+    classifier.add(Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu', 
+                          padding = 'same'))
+    classifier.add(MaxPool2D(pool_size = (2, 2), padding = 'same'))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.25))
+    
+    classifier.add(Conv2D(filters = 64, kernel_size = (3, 3), activation = 'relu', 
+                          padding = 'same'))
+    classifier.add(MaxPool2D(pool_size = (2, 2), padding = 'same'))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.25))
+    
+    classifier.add(Conv2D(filters = 128, kernel_size = (3, 3), activation = 'relu', 
+                          padding = 'same'))
+    classifier.add(MaxPool2D(pool_size = (2, 2), padding = 'same'))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.4))
+    
+    classifier.add(Flatten())
+    classifier.add(Dense(256, activation = 'relu', kernel_constraint = unit_norm()))
+    classifier.add(BatchNormalization())
+    classifier.add(Dropout(0.2))
+    classifier.add(Dense(10, activation = 'softmax'))
+                   
+    #opt = Adam()
+    #opt = SGD()
+    opt = RMSprop()
+    
+    classifier.compile(optimizer = opt, loss = 'categorical_crossentropy', metrics = ['accuracy'])
+    
+    plot_model(classifier, to_file='model_plot.png', show_shapes=True, show_layer_names=True)
+    
+    return classifier
+
+epochs = 50
+datagen = ImageDataGenerator()
+
+Not: 3. model bir convolution katmanı daha eklenerek oluşturuldu. Filtre sayılarıyla biraz oynandı. Fully connected kısmı
+bir önceki modelde olduğu gibi tek bir katmandan oluşmakta fakat bu sefer dense sayısı arttırıldı. Optimizer RMSprop olarak
+değiştirildi. Grafiklerde görüldüğü üzere bir önceki modelin göstermiş olduğu performansa yakın bir performans sergilenmiş
+durumda fakat bu model bir önceki modelden daha hızlı çalışmakta. Bir önceki modelde olduğu gibi bu modelde de test verisetinde
+accuracy değeri ortalama %93 olarak görülmekte. Çalışmalarda accuracy değeri %94'ü hiç görmedi. Çok daha detaylı bir çalışma ya-
+pılıp daha ince teknikler uygulanarak bu değerler de görülebilir ancak bunun için fazla zaman olmadığı için deney şimdilik 
+burada sonlandırılacaktır. Kısaca sonlandırmak gerekirse deneylerde ANN modelleri validation data üzerinde en falza %90 
+accuracy değerine ulaşabilirken CNN modelleri ANN modellerine göre çok daha başarılı bir performans sergilemiş olup %93 
+oranında bir başarı oranına rahatlıkla ulaşabilmektedir. İmaj sınıflandırma işlemlerinde CNN modelleri imajlar üzerinde detaylı 
+filtreleme teknikleri kullanıp imajlardan ayırt etmeyi daha kolaylaştıracak özellikleri çıkarabildikleri için daha iyi bir 
+sınıflandırma yaptıkları söylenebilir. 
+ 
